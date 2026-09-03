@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru" class="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Учебник</title>
+    <script src="theme-init.js"></script>
+ <link rel="stylesheet" href="style.css"></head>
+<body>
+
+  <!-- Плавающая панель управления -->
+  <div class="controls">
+    <button onclick="changeFont(-0.1)" title="Уменьшить шрифт">A-</button>
+    <button onclick="changeFont(0.1)" title="Увеличить шрифт">A+</button>
+    <button onclick="setTheme('dark')" title="Тёмная тема">🌙</button>
+    <button onclick="setTheme('sepia')" title="Тема Сепия">📜</button>
+    <button onclick="setTheme('light')" title="Светлая тема">☀️</button>
+  </div>
+
+  <!-- КОНТЕНТ УЧЕБНИКА -->
+  <article id="content">
+  
+<div style="display: flex; justify-content: space-between; margin-top: 2em;">
+  <a href="ch14.html">← Назад</a>
+  <a href="ch16.html">Вперед →</a>
+</div>
+  </article>
+
+  <!-- Скрипты читалки -->
+ <script src="script.js"></script>
+ </body>
+</html>
