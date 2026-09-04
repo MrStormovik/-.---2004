@@ -31,33 +31,3 @@
 	  if (pos) {
 		  window.scrollTo(0, parseInt(pos));
 		  }
-document.addEventListener("DOMContentLoaded", () => {
-    // Находим все формулы на странице (и inline, и block)
-    document.querySelectorAll('math').forEach(math => {
-        const semantics = math.querySelector('semantics');
-        if (!semantics) return;
-
-        const mainMrow = semantics.querySelector('mrow');
-        if (!mainMrow) return;
-
-        const children = Array.from(mainMrow.children);
-        mainMrow.innerHTML = ''; // Очищаем старую монолитную структуру
-
-        let currentGroup = document.createElement('mrow');
-
-        children.forEach(child => {
-            currentGroup.appendChild(child);
-
-            // Как только встречаем знак ∨ или + , закрываем группу для переноса
-            if (child.tagName === 'mo' && (child.textContent.trim() === '∨' || child.textContent.trim() === '+')) {
-                mainMrow.appendChild(currentGroup);
-                currentGroup = document.createElement('mrow'); // Новая группа для следующей скобки
-            }
-        });
-
-        // Добавляем хвостик формулы
-        if (currentGroup.children.length > 0) {
-            mainMrow.appendChild(currentGroup);
-        }
-    });
-});

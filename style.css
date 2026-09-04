@@ -68,20 +68,6 @@
       font-kerning: normal;
       font-size: var(--base-font-size);
     }
-/* Настраиваем внутренний контейнер формулы для переноса строк */
-math > semantics > mrow {
-    display: inline-flex !important;
-    flex-wrap: wrap !important;
-    row-gap: 6px !important;       /* Отступ между «упавшими» строками */
-    vertical-align: middle !important;
-}
-
-/* Запрещаем перенос внутри самих скобок, чтобы они не разрывались */
-math > semantics > mrow > mrow {
-    display: inline-flex !important;
-    white-space: nowrap !important; /* Скобка переносится только целиком */
-    align-items: center !important;
-}
 
     @media (max-width: 600px) {
 	.controls {
