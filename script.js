@@ -31,3 +31,23 @@
 	  if (pos) {
 		  window.scrollTo(0, parseInt(pos));
 		  }
+
+// Если формула не помещается в строку, разрешаем ей переноситься (вместо ползунка)
+function fitFormulas() {
+  // Многострочные формулы (системы, выкладки) на узком экране уменьшаем, чтобы влезли
+  document.querySelectorAll('math:has(mtable)').forEach(m => {
+    m.style.fontSize = '';
+    const w = m.scrollWidth, box = m.parentElement.clientWidth;
+    if (w > box + 2) m.style.fontSize = Math.max(0.55, 1.05 * box / w * 0.97) + 'em';
+  });
+  document.querySelectorAll('math.wrap').forEach(m => m.classList.remove('wrap'));
+  document.querySelectorAll('p, li').forEach(el => {
+    if (el.scrollWidth > el.clientWidth + 2) {
+      el.querySelectorAll('math:not(:has(mtable))').forEach(m => {
+        if (m.getBoundingClientRect().width > el.clientWidth * 0.5) m.classList.add('wrap');
+      });
+    }
+  });
+}
+window.addEventListener('load', fitFormulas);
+window.addEventListener('resize', fitFormulas);

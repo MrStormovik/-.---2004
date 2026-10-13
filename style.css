@@ -67,7 +67,41 @@
       text-rendering: optimizeLegibility;
       font-kerning: normal;
       font-size: var(--base-font-size);
+      font-family: Arial, Helvetica, sans-serif;
     }
+/* Формулы */
+math {
+    font-family: "Cambria Math", "STIX Two Math", "Latin Modern Math", "Noto Sans Math", Arial, sans-serif;
+    font-size: 1.05em;
+}
+/* Системы и таблицы формул — отдельной строкой, слева */
+math:has(mtable) {
+    display: block math;
+    margin: 0.8em 0;
+    width: max-content;
+    max-width: 100%;
+}
+mtd { padding: 0.15em 0.5em; }
+/* Никаких ползунков */
+* { scrollbar-width: none; }
+*::-webkit-scrollbar { display: none; }
+
+/* Теоремы — в рамке, определения — жирным */
+.theorem {
+    margin: 1.2em 0;
+    padding: 0.5em 1em;
+    border-left: 3px solid var(--link);
+    background: var(--table-bg2);
+}
+p.definition, div.definition p { font-weight: bold; }
+div.definition { margin: 1.2em 0; }
+div.definition p { margin: 0.4em 0; }
+.task-head { font-weight: bold; margin-top: 1.4em; }
+h3 { font-size: 1.15em; }
+.controls, .controls button { font-family: Arial, Helvetica, sans-serif; }
+h3.exercises { margin-top: 2em; padding-top: 0.6em; border-top: 1px solid var(--quote-border); letter-spacing: 0.04em; }
+ol > li { margin: 0.35em 0; }
+img { display: block; margin: 1em 0; }
 
     @media (max-width: 600px) {
 	.controls {
@@ -244,3 +278,83 @@
       outline: none;
       padding: 0 4px;
     }
+/* Длинные формулы на узком экране переносятся по строкам (без ползунков) */
+math.wrap > semantics > mrow {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    row-gap: 0.3em;
+}
+math.wrap > semantics > mrow > * { white-space: nowrap; }
+
+/* ==========================================
+   Списки, подпункты, умозаключения, доказательства
+   ========================================== */
+@counter-style cyr-alpha {
+  system: alphabetic;
+  symbols: "а" "б" "в" "г" "д" "е" "ж" "з" "и" "к" "л" "м" "н" "п" "р" "с" "т" "у";
+  suffix: ") ";
+}
+ol.ex { padding-left: 2em; }
+ol.ex > li { margin: 1em 0; }
+ol.sub { list-style-type: cyr-alpha; margin: 0.5em 0; padding-left: 1.8em; }
+ol.sub > li { margin: 0.35em 0; }
+ol.sub.compact {
+  display: flex; flex-wrap: wrap; gap: 0.3em 1.8em;
+  padding-left: 0; list-style-position: inside;
+}
+ol.sub.compact > li { margin: 0; }
+ol.sub > li > p { margin: 0.4em 0; }
+
+/* Теорема: рамка вокруг формулировки вместе с её пунктами */
+div.theorem > p:first-child { margin-top: 0; }
+div.theorem > :last-child { margin-bottom: 0; }
+div.theorem ol.sub { margin-top: 0.4em; }
+/* Определения — жирным шрифтом, без рамки */
+.definition, .definition * { font-weight: bold; }
+p.definition + ol.sub, p.definition + ol.sub * { font-weight: bold; }
+
+/* Умозаключения: посылки, черта, «∴ вывод» */
+.syllogisms { display: flex; flex-wrap: wrap; gap: 1em 3em; margin: 0.8em 0; }
+.syllogism { width: fit-content; max-width: 100%; }
+.syllogism .premises { border-bottom: 1px solid var(--text); padding-bottom: 0.2em; }
+.syllogism .premises p { margin: 0.1em 0; }
+.syllogism .conclusion { padding-top: 0.2em; }
+
+/* Формальное доказательство: № | утверждение | обоснование */
+table.proof { display: table; width: 100%; margin: 1em 0; border-collapse: collapse; }
+table.proof tr, table.proof tr:nth-child(2n) { background: none; border: 0; }
+table.proof td { border: 0; padding: 0.2em 1em 0.2em 0; vertical-align: top; }
+table.proof td.n { text-align: right; white-space: nowrap; padding-right: 0.6em; }
+@media (max-width: 600px) { table.proof { font-size: 0.85em; } }
+
+/* Матрицы внутри предложения (ch4) — остаются в строке */
+math.inl {
+    display: inline math;
+    margin: 0;
+    width: auto;
+    max-width: none;
+}
+
+/* Алгоритмы (ch5) */
+.algo { margin: 1em 0; padding: 0.5em 1em; border-left: 3px solid var(--table-border); background: var(--table-bg2); }
+.algo p { margin: 0.15em 0; padding-left: calc(var(--i, 0) * 1.6em); text-indent: 0; }
+.algo .ov { text-decoration: overline; }
+/* Вычисления «в столбик» и таблицы сложения/умножения (ch5) */
+.calc { display: flex; flex-wrap: wrap; gap: 0.5em 3em; margin: 1em 0; }
+.calc > div { text-align: right; font-family: "Courier New", monospace; }
+.calc p { margin: 0; line-height: 1.35; }
+.calc p.lab { text-align: left; font-family: Arial, Helvetica, sans-serif; }
+.calc p.rb { border-bottom: 1px solid currentColor; }
+.calc p.ra { border-top: 1px solid currentColor; }
+table.grid { display: table; width: auto; margin: 1em 0; border-collapse: collapse; font-size: 0.8em; }
+table.grid td { padding: 0.15em 0.4em; border: 1px solid var(--table-cell); text-align: center; }
+table.grid td.h { font-weight: bold; background: var(--table-bg2); }
+table.grid tr, table.grid tr:nth-child(2n) { background: none; }
+/* Формулы-пункты в списках не центрируем (ch5) */
+ol.sub li > math:not(:has(mtable)) { display: inline math; }
+@media (max-width: 480px) { table.grid { font-size: 0.66em; } table.grid td { padding: 0.1em 0.2em; } }
+@media (max-width: 400px) { table.grid { font-size: 0.56em; } table.grid td { padding: 0.1em 0.15em; } }
+
+/* ch6: ряды букв кубиков */
+p.cube{letter-spacing:.12em;font-weight:600;margin:.2em 0}
